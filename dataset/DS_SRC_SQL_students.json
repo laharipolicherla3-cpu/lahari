@@ -1,0 +1,45 @@
+{
+	"name": "DS_SRC_SQL_students",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_onprem_ir",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "studentrollnum",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "studentname",
+				"type": "varchar"
+			},
+			{
+				"name": "course",
+				"type": "varchar"
+			},
+			{
+				"name": "fee",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "gender",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "student"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

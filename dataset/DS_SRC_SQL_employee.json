@@ -1,0 +1,42 @@
+{
+	"name": "DS_SRC_SQL_employee",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_onprem_ir",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Empid",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Name",
+				"type": "varchar"
+			},
+			{
+				"name": "salary",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Login",
+				"type": "time",
+				"scale": 7
+			},
+			{
+				"name": "logout",
+				"type": "time",
+				"scale": 7
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "employee"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

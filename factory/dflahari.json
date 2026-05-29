@@ -1,0 +1,15 @@
+{
+	"name": "dflahari",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "755bfd42-282d-46aa-abea-6dc1ac272c19",
+		"tenantId": "cb4ca907-c49a-4aa5-87a5-1c4296c5571b"
+	}
+}

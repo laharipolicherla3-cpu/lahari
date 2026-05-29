@@ -1,0 +1,24 @@
+{
+	"name": "DS_Snk_ADLS_student",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "onprem",
+				"fileSystem": "container-lahari"
+			},
+			"columnDelimiter": "|",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

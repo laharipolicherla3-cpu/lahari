@@ -1,0 +1,21 @@
+{
+	"name": "Lnk_onprem_ir",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "LAHARI",
+			"database": "Lahari",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "dedeepya1",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwNTYxNTBkZC03NTEzLTQ5MWItOTU3Ni0wYzE0NmQ3NmUyODQiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "onprem-ir",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
