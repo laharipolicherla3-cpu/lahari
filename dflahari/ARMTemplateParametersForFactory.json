@@ -11,6 +11,9 @@
 		"Lnk_onprem_ir_password": {
 			"value": ""
 		},
+		"Lnk_sql_password": {
+			"value": ""
+		},
 		"Lnk_ADLS_properties_typeProperties_url": {
 			"value": "https://datalakelahari.dfs.core.windows.net/"
 		},
@@ -22,6 +25,15 @@
 		},
 		"Lnk_onprem_ir_properties_typeProperties_userName": {
 			"value": "dedeepya1"
+		},
+		"Lnk_sql_properties_typeProperties_server": {
+			"value": "lahari-server.database.windows.net"
+		},
+		"Lnk_sql_properties_typeProperties_database": {
+			"value": "lahari_db"
+		},
+		"Lnk_sql_properties_typeProperties_userName": {
+			"value": "lahari-admin"
 		}
 	}
 }
