@@ -1,0 +1,79 @@
+{
+	"name": "DS_ERROR_SNK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DocumentNode",
+				"type": "varchar"
+			},
+			{
+				"name": "DocumentLevel",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "Title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Owner",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "FolderFlag",
+				"type": "bit"
+			},
+			{
+				"name": "FileName",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FileExtension",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Revision",
+				"type": "nchar"
+			},
+			{
+				"name": "ChangeNumber",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "DocumentSummary",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Document",
+				"type": "varbinary"
+			},
+			{
+				"name": "rowguid",
+				"type": "uniqueidentifier"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "production",
+			"table": "Document"
+		}
+	}
+}

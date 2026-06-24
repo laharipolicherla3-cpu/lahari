@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "TodayDate",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -21,7 +21,7 @@
 							{
 								"name": "Load_Date ",
 								"value": {
-									"value": "@formatDateTime('2026-06-24')",
+									"value": "@formatDateTime(utcNow(),'yyyy-MM-dd')",
 									"type": "Expression"
 								}
 							}
