@@ -336,6 +336,86 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_IST_ADLS to SQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "TimeConversion",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "Load_Date",
+										"value": {
+											"value": "@convertFromUtc(utcNow(),'india standard time','dd-MM-yyyy HH:mm:ss') ",
+											"type": "Expression"
+										}
+									}
+								],
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_IST_SRC",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_IST_SNK",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_IST_SRC')]",
+				"[concat(variables('factoryId'), '/datasets/DS_IST_SNK')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PL_SQL to ADLS')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1190,6 +1270,161 @@
 					},
 					{
 						"name": "rowguid",
+						"type": "String"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Lnk_ADLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_IST_SNK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Lnk_sql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "BusinessEntityID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "AverageLeadTime",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "StandardPrice",
+						"type": "decimal",
+						"precision": 20,
+						"scale": 2
+					},
+					{
+						"name": "LastReceiptCost",
+						"type": "decimal",
+						"precision": 20,
+						"scale": 2
+					},
+					{
+						"name": "LastReceiptDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "MinOrderQty",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "MaxOrderQty",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OnOrderQty",
+						"type": "decimal",
+						"precision": 20,
+						"scale": 2
+					},
+					{
+						"name": "UnitMeasureCode",
+						"type": "varchar"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "Purchasing",
+					"table": "ProductVendor"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Lnk_sql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_IST_SRC')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Lnk_ADLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Purchasing.ProductVendor.csv",
+						"folderPath": "purchasing",
+						"fileSystem": "container-lahari"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ProductID",
+						"type": "String"
+					},
+					{
+						"name": "BusinessEntityID",
+						"type": "String"
+					},
+					{
+						"name": "AverageLeadTime",
+						"type": "String"
+					},
+					{
+						"name": "StandardPrice",
+						"type": "String"
+					},
+					{
+						"name": "LastReceiptCost",
+						"type": "String"
+					},
+					{
+						"name": "LastReceiptDate",
+						"type": "String"
+					},
+					{
+						"name": "MinOrderQty",
+						"type": "String"
+					},
+					{
+						"name": "MaxOrderQty",
+						"type": "String"
+					},
+					{
+						"name": "OnOrderQty",
+						"type": "String"
+					},
+					{
+						"name": "UnitMeasureCode",
 						"type": "String"
 					},
 					{
