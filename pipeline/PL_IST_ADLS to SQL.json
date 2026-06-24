@@ -1,5 +1,5 @@
 {
-	"name": "PL_ADLS to SQL",
+	"name": "PL_IST_ADLS to SQL",
 	"properties": {
 		"activities": [
 			{
@@ -21,7 +21,7 @@
 							{
 								"name": "Load_Date",
 								"value": {
-									"value": "@formatDateTime(convertTimeZone(utcNow(),'utc','india standard time','yyyy-MM-dd'))",
+									"value": "@convertFromUtc(utcNow(),'india standard time','dd-MM-yyyy HH:mm:ss') ",
 									"type": "Expression"
 								}
 							}
