@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ERROR ",
+				"name": "ERROR",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -59,7 +59,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "ERROR ",
+						"activity": "ERROR",
 						"dependencyConditions": [
 							"Failed"
 						]
