@@ -80,9 +80,6 @@
 					"Lnk_sql_password": {
 						"value": "[parameters('Lnk_sql_password')]"
 					},
-					"Lnk_onprem_ir_password": {
-						"value": "[parameters('Lnk_onprem_ir_password')]"
-					},
 					"Lnk_ADLS_properties_typeProperties_url": {
 						"value": "[parameters('Lnk_ADLS_properties_typeProperties_url')]"
 					},
@@ -94,15 +91,6 @@
 					},
 					"Lnk_sql_properties_typeProperties_userName": {
 						"value": "[parameters('Lnk_sql_properties_typeProperties_userName')]"
-					},
-					"Lnk_onprem_ir_properties_typeProperties_server": {
-						"value": "[parameters('Lnk_onprem_ir_properties_typeProperties_server')]"
-					},
-					"Lnk_onprem_ir_properties_typeProperties_database": {
-						"value": "[parameters('Lnk_onprem_ir_properties_typeProperties_database')]"
-					},
-					"Lnk_onprem_ir_properties_typeProperties_userName": {
-						"value": "[parameters('Lnk_onprem_ir_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -121,6 +109,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Lnk_onprem_ir_password": {
+						"value": "[parameters('Lnk_onprem_ir_password')]"
+					},
+					"Lnk_onprem_ir_properties_typeProperties_server": {
+						"value": "[parameters('Lnk_onprem_ir_properties_typeProperties_server')]"
+					},
+					"Lnk_onprem_ir_properties_typeProperties_database": {
+						"value": "[parameters('Lnk_onprem_ir_properties_typeProperties_database')]"
+					},
+					"Lnk_onprem_ir_properties_typeProperties_userName": {
+						"value": "[parameters('Lnk_onprem_ir_properties_typeProperties_userName')]"
 					}
 				}
 			},
