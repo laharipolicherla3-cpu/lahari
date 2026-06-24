@@ -1,0 +1,76 @@
+{
+	"name": "DS_IST_SNK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ProductID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "BusinessEntityID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "AverageLeadTime",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "StandardPrice",
+				"type": "decimal",
+				"precision": 20,
+				"scale": 2
+			},
+			{
+				"name": "LastReceiptCost",
+				"type": "decimal",
+				"precision": 20,
+				"scale": 2
+			},
+			{
+				"name": "LastReceiptDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "MinOrderQty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "MaxOrderQty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OnOrderQty",
+				"type": "decimal",
+				"precision": 20,
+				"scale": 2
+			},
+			{
+				"name": "UnitMeasureCode",
+				"type": "varchar"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "Purchasing",
+			"table": "ProductVendor"
+		}
+	}
+}
