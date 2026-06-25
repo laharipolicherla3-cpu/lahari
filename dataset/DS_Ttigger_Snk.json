@@ -1,0 +1,33 @@
+{
+	"name": "DS_Ttigger_Snk",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BusinessEntityID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CreditCardID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "sales",
+			"table": "PersonCreditCard"
+		}
+	}
+}

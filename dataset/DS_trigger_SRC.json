@@ -1,0 +1,37 @@
+{
+	"name": "DS_trigger_SRC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Sales.PersonCreditCard.csv",
+				"folderPath": "sales",
+				"fileSystem": "container-lahari"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "BusinessEntityID",
+				"type": "String"
+			},
+			{
+				"name": "CreditCardID",
+				"type": "String"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "String"
+			}
+		]
+	}
+}
