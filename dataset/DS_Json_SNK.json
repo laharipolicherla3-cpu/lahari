@@ -1,0 +1,19 @@
+{
+	"name": "DS_Json_SNK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "Json",
+				"fileSystem": "container-lahari"
+			}
+		},
+		"schema": {}
+	}
+}

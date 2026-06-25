@@ -1,0 +1,81 @@
+{
+	"name": "DS_CSV_SRC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Production.Document.csv",
+				"folderPath": "production",
+				"fileSystem": "container-lahari"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "DocumentNode",
+				"type": "String"
+			},
+			{
+				"name": "DocumentLevel",
+				"type": "String"
+			},
+			{
+				"name": "Title",
+				"type": "String"
+			},
+			{
+				"name": "Owner",
+				"type": "String"
+			},
+			{
+				"name": "FolderFlag",
+				"type": "String"
+			},
+			{
+				"name": "FileName",
+				"type": "String"
+			},
+			{
+				"name": "FileExtension",
+				"type": "String"
+			},
+			{
+				"name": "Revision",
+				"type": "String"
+			},
+			{
+				"name": "ChangeNumber",
+				"type": "String"
+			},
+			{
+				"name": "Status",
+				"type": "String"
+			},
+			{
+				"name": "DocumentSummary",
+				"type": "String"
+			},
+			{
+				"name": "Document",
+				"type": "String"
+			},
+			{
+				"name": "rowguid",
+				"type": "String"
+			},
+			{
+				"name": "ModifiedDate",
+				"type": "String"
+			}
+		]
+	}
+}
