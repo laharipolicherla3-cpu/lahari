@@ -13,6 +13,118 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_trigger_Adls to sql')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Trigger",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DS_trigger_SRC",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DS_Ttigger_Snk",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SRC_SQL_employee')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Lnk_onprem_ir",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Empid",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Name",
+						"type": "varchar"
+					},
+					{
+						"name": "salary",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Login",
+						"type": "time",
+						"scale": 7
+					},
+					{
+						"name": "logout",
+						"type": "time",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "employee"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_SRC_SQL_students')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -102,49 +214,54 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "DelimitedText4",
+								"referenceName": "DS_nestedJson_SRC",
 								"type": "DatasetReference"
 							},
-							"name": "source1"
+							"name": "nestedjsonsrc"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSqlTable2",
+								"referenceName": "DS_SNK_SQL",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
+							"name": "jsonnestedtoSql"
 						}
 					],
-					"transformations": [],
+					"transformations": [
+						{
+							"name": "flatten1"
+						}
+					],
 					"scriptLines": [
 						"source(output(",
-						"          AddressID as string,",
-						"          AddressLine1 as string,",
-						"          AddressLine2 as string,",
-						"          City as string,",
-						"          StateProvinceID as string,",
-						"          PostalCode as string,",
-						"          SpatialLocation as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as string",
+						"          class as string,",
+						"          school_name as string,",
+						"          students as (grade as (chemistry as short, math as short, physics as short), id as string, name as string)[]",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 sink(allowSchemaDrift: true,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'arrayOfDocuments') ~> nestedjsonsrc",
+						"nestedjsonsrc foldDown(unroll(students, students),",
+						"     mapColumn(",
+						"          class,",
+						"          school_name,",
+						"          students",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> flatten1",
+						"flatten1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
-						"          AddressID as integer,",
-						"          AddressLine1 as string,",
-						"          AddressLine2 as string,",
-						"          City as string,",
-						"          StateProvinceID as string,",
-						"          PostalCode as string,",
-						"          SpatialLocation as string,",
-						"          rowguid as string,",
-						"          ModifiedDate as timestamp",
+						"          School_Name as string,",
+						"          Class as string,",
+						"          Student_ID as string,",
+						"          Student_Name as string,",
+						"          Student_Math_grade as integer,",
+						"          Student_Physics_grade as integer,",
+						"          Student_Chemistry_grade as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -153,7 +270,16 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          School_Name = school_name,",
+						"          Class = class,",
+						"          Student_ID = students.id,",
+						"          Student_Name = students.name,",
+						"          Student_Math_grade = students.grade.math,",
+						"          Student_Physics_grade = students.grade.physics,",
+						"          Student_Chemistry_grade = students.grade.chemistry",
+						"     )) ~> jsonnestedtoSql"
 					]
 				}
 			},
@@ -297,7 +423,55 @@
 				"annotations": [],
 				"lastPublishTime": "2026-05-29T07:49:59Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_SRC_SQL_employee')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_NestedJson_SRC to SQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DF_School",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"nestedjsonsrc": {},
+									"jsonnestedtoSql": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/multiplefl_tble')]",
@@ -461,7 +635,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_trigger_Adls to sql')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trigger1')]",
@@ -489,7 +665,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PL_trigger_Adls to sql')]"
+			]
 		}
 	]
 }
