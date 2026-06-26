@@ -1,0 +1,66 @@
+{
+	"name": "DS_JSON_SRC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_ADLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Production.Document.json",
+				"folderPath": "Json",
+				"fileSystem": "container-lahari"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"DocumentNode": {
+					"type": "string"
+				},
+				"DocumentLevel": {
+					"type": "string"
+				},
+				"Title": {
+					"type": "string"
+				},
+				"Owner": {
+					"type": "string"
+				},
+				"FolderFlag": {
+					"type": "string"
+				},
+				"FileName": {
+					"type": "string"
+				},
+				"FileExtension": {
+					"type": "string"
+				},
+				"Revision": {
+					"type": "string"
+				},
+				"ChangeNumber": {
+					"type": "string"
+				},
+				"Status": {
+					"type": "string"
+				},
+				"DocumentSummary": {
+					"type": "string"
+				},
+				"Document": {
+					"type": "string"
+				},
+				"rowguid": {
+					"type": "string"
+				},
+				"ModifiedDate": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

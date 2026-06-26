@@ -1,0 +1,16 @@
+{
+	"name": "DS_SQL_SNK",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "production",
+			"table": "Document"
+		}
+	}
+}
