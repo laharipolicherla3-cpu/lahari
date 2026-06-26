@@ -724,6 +724,77 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_JSON_SRC')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Lnk_ADLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Production.Document.json",
+						"folderPath": "Json",
+						"fileSystem": "container-lahari"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"DocumentNode": {
+							"type": "string"
+						},
+						"DocumentLevel": {
+							"type": "string"
+						},
+						"Title": {
+							"type": "string"
+						},
+						"Owner": {
+							"type": "string"
+						},
+						"FolderFlag": {
+							"type": "string"
+						},
+						"FileName": {
+							"type": "string"
+						},
+						"FileExtension": {
+							"type": "string"
+						},
+						"Revision": {
+							"type": "string"
+						},
+						"ChangeNumber": {
+							"type": "string"
+						},
+						"Status": {
+							"type": "string"
+						},
+						"DocumentSummary": {
+							"type": "string"
+						},
+						"Document": {
+							"type": "string"
+						},
+						"rowguid": {
+							"type": "string"
+						},
+						"ModifiedDate": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Lnk_ADLS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_Json_SNK')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -790,6 +861,27 @@
 				"typeProperties": {
 					"schema": "Person",
 					"table": "EmailAddress"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Lnk_sql')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_SQL_SNK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Lnk_sql",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "production",
+					"table": "Document"
 				}
 			},
 			"dependsOn": [
@@ -935,67 +1027,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Lnk_ADLS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_Ttigger_Snk')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Lnk_sql",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "BusinessEntityID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CreditCardID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "sales",
-					"table": "PersonCreditCard"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Lnk_sql')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_err_SNK')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Lnk_sql",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"tablename": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Lnk_sql')]"
 			]
 		}
 	]
