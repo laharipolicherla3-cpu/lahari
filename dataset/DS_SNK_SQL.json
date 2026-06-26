@@ -1,0 +1,48 @@
+{
+	"name": "DS_SNK_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Lnk_sql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "School_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Class",
+				"type": "varchar"
+			},
+			{
+				"name": "Student_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "Student_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Student_Math_grade",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Student_Physics_grade",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Student_Chemistry_grade",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "School"
+		}
+	}
+}
